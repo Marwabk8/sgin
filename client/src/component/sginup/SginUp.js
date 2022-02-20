@@ -1,7 +1,9 @@
 
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { sginup } from '../../redux/actions/authActions';
+
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router';
+import { clearerrors, sginup } from '../../redux/actions/authActions';
 
 import "./Sginup.css"
 
@@ -11,7 +13,18 @@ function SginUp() {
  const[password,setPassword]= useState('')
 
  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const errors=useSelector(state=>state.authReducers.errors)
+  
+  useEffect(() => {
+    errors && errors.map(el => alert(el.msg));
+  }, [errors])
 
+  const handleclick = async (e) => {
+    e.preventDefault();
+    await dispatch(sginup({email,password},navigate)) ;
+    dispatch(clearerrors)
+  }
 
   return (
 
@@ -28,7 +41,7 @@ function SginUp() {
           <input value={email} onChange={(e)=>setEmail(e.target.value)} type="email"  name placeholder="email" />
           <label>Password</label>
           <input value={password} onChange={(e)=>setPassword(e.target.value)} type="password" name placeholder="password" />
-          <button onClick={()=>dispatch(sginup(email,password))} type="button">SIGN Up</button>
+          <button onClick={handleclick} type="button">SIGN Up</button>
         </form>
       </div>
     </div>
