@@ -4,6 +4,8 @@ import { getAllStore } from '../redux/actions/storeActions'
 import{getAllProducts} from'../redux/actions/productActions'
 import StoreCard from './StoreCard'
 import CardUser from'./CardUser'
+import { Button } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
 
 function Admin() {
  const stores = useSelector(state=>state.storeReducers.stores)
@@ -21,9 +23,18 @@ const products = useSelector(state=>state.productsReducers.products)
 
   return (
     <div>
- <h3>liste des boutiques</h3>
+ <h3> stores list</h3>
+ <Link to ='/addEdit'>
+ <Button variant="dark">Add New Store</Button>{' '}
+</Link>
+  
+
  {stores.map(el=><StoreCard store ={el} key={el._id}/>)}
- <h3>liste des produits </h3>
+ <h3> Product list</h3>
+ <Link to ='/addEditProduct'>
+ <Button variant="dark">Add New product</Button>{' '}
+</Link>
+
  {products.map( el=><CardUser product={el} key={el._id}/>)}
 
 

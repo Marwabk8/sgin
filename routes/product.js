@@ -6,7 +6,7 @@ const Product= require('../models/Product')
 
 productRoute.post('/produit', async(req,res)=> {
      let {name,type,description,rate,disponibilite} = req.body
-
+     let {imageUrl}=req.file
      rate=Number(rate)
      try {
 
@@ -16,6 +16,7 @@ productRoute.post('/produit', async(req,res)=> {
      description,
      rate,
      disponibilite,
+     imageUrl
     })
 
     await product.save()
@@ -28,11 +29,9 @@ productRoute.post('/produit', async(req,res)=> {
      }
 
 
-} 
+} )
 
-)
-
-productRoute.get('/home',async(req,res)=>{
+productRoute.get('/produit',async(req,res)=>{
      try {
          const products= await Product.find()
          res.send(products)
@@ -43,7 +42,25 @@ productRoute.get('/home',async(req,res)=>{
      
      })
 
-   productRoute.put('/p/:productId',async(req, res)=>
+
+productRoute.delete('/produit/:productId',async(req, res) =>
+     { const {productId}= req.params;
+     try { 
+         await Product.findByIdAndDelete(productId);
+         res.send ("Product deleted")
+         
+     } catch (error) {
+         res.status(500).send("server error")
+       
+     }
+     
+     })
+
+
+     
+  
+
+   productRoute.put('/produit/:productId',async(req, res)=>
    {const {productId} = req.params;
    try {
        const product= await Product.findByIdAndUpdate(productId,{$set:{...req.body}});
@@ -57,6 +74,18 @@ productRoute.get('/home',async(req,res)=>{
    })
 
 
+   productRoute.put('/produit/rate/:productId',async(req, res)=>
+   {const {productId} = req.params;
+   try {
+       const product= await Product.findByIdAndUpdate(productId,{$set:{rate:req.body.rate}});
+       res.send({message:"rate update",product});
+       
+   } catch (error) {
+       res.status(500).send("server error");
+       
+   }
+   
+   })
 
 
 module.exports=productRoute 

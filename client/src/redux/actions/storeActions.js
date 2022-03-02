@@ -19,7 +19,7 @@ import { GET_ALL_STORE } from "../types/storeTypes";
 export const addStore = formData => async dispatch =>{
 
 try {
- await axios.post('/boutique',formData);
+ await axios.post('/store/stores',formData);
  dispatch(getAllStore())
    
 } catch (error) {
@@ -28,13 +28,11 @@ try {
    
 }
 
-
-
-}
+};
 
  export const editStore =(id, formData)=>async dispatch=>{
    try {
-await axios.put(`/store/store/${id}`, formData);
+await axios.put(`/store/stores/${id}`, formData);
 dispatch(getAllStore());
 
        
@@ -42,3 +40,16 @@ dispatch(getAllStore());
        console.log(error);
    }
 };
+
+ export const deleteStore =(id)=> async dispatch=>{
+try {
+   await axios.delete(`/store/stores/${id}`)
+ dispatch(getAllStore());
+} catch (error) {
+   console.log(error);
+}
+
+
+ }
+
+

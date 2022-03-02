@@ -4,7 +4,7 @@ const res = require('express/lib/response')
 const Store = require('../models/Store')
 const storeRoute = express.Router()
 
-storeRoute.post('/boutique', async(req,res)=>{
+storeRoute.post('/stores', async(req,res)=>{
  let {name,adresse,tel}= req.body
   tel=Number(tel)
 
@@ -30,6 +30,20 @@ try {
  res.send(stores)
 } catch (error) {
     res.status(500).send("sever error")  
+}
+
+})
+
+
+storeRoute.delete('/stores/:storeId',async(req, res) =>
+{ const {storeId}= req.params;
+try { 
+    await Store.findByIdAndDelete(storeId);
+    res.send ("store deleted")
+    
+} catch (error) {
+    res.status(500).send("server error")
+  
 }
 
 })

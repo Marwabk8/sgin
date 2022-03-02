@@ -15,7 +15,7 @@ const user= useSelector(state=>state.authReducers.user);
 
 <Navbar bg="light" expand="lg">
   <Container fluid>
-    <Navbar.Brand href="#">Navbar scroll</Navbar.Brand>
+    <Navbar.Brand href="#">Beautyadvisor</Navbar.Brand>
     <Navbar.Toggle aria-controls="navbarScroll" />
     <Navbar.Collapse id="navbarScroll">
       <Nav
@@ -40,7 +40,7 @@ const user= useSelector(state=>state.authReducers.user);
         auth && token && !user.role ?
          <div><Nav.Link onClick={()=>dispatch(logout())}> Logout </Nav.Link>
         <Nav.Link as={Link} to= '/profile' href="#action2">Profile</Nav.Link> 
-        
+        <Nav.Link as={Link} to= '/postProduct'>Add New Product</Nav.Link>
         
         </div> :
         <>
